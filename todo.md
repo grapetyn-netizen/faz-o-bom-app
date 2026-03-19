@@ -25,6 +25,7 @@
 - [x] Tela "Gerar Relatório" com seleção por período
 - [x] Termo de responsabilidade obrigatório
 - [x] Upload de fotos do show (corrigido: permite qualquer quantidade, câmera/galeria, sem mínimo obrigatório)
+- [x] Botão "❓ Guia Prático de Uso" criado com encoding UTF-8 correto e conteúdo didático completo
 - [ ] Upload de cue-sheet e contrato
 - [ ] Edição de registros existentes
 - [ ] Duplicação de registros
