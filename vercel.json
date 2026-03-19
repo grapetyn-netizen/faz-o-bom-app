@@ -1,15 +1,6 @@
 {
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist/public",
-  "framework": "vite",
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/index.html"
-    }
-  ]
+  "buildCommand": "pnpm build && cp dist/public/* dist/ 2>/dev/null || true",
+  "outputDirectory": "dist",
+  "framework": null,
+  "public": "dist/public"
 }
