@@ -1,0 +1,34 @@
+{
+  "name": "Faz o B.O.M. — Boletim de Ocorrência Musical",
+  "short_name": "Faz o B.O.M.",
+  "description": "Proteja seus direitos autorais registrando seus shows e trilhas sonoras",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "icons": [
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/310519663453570729/PvRpa5WcFSM99z8A5gG6sx/bom-logo-AUrCmJFuutvoYBNEmAgcFv.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/310519663453570729/PvRpa5WcFSM99z8A5gG6sx/bom-logo-AUrCmJFuutvoYBNEmAgcFv.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["music", "productivity"],
+  "screenshots": [
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/310519663453570729/PvRpa5WcFSM99z8A5gG6sx/bom-logo-AUrCmJFuutvoYBNEmAgcFv.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ]
+}

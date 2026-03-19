@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, shows, trilhas, uploads, Show, InsertShow, Trilha, InsertTrilha, Upload, InsertUpload } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,133 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Shows queries
+export async function createShow(show: InsertShow): Promise<Show | null> {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.insert(shows).values(show);
+    return db.select().from(shows).where(eq(shows.id, show.id)).limit(1).then(r => r[0] || null);
+  } catch (error) {
+    console.error("[Database] Failed to create show:", error);
+    throw error;
+  }
+}
+
+export async function getUserShows(userId: number): Promise<Show[]> {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    return await db.select().from(shows).where(eq(shows.userId, userId));
+  } catch (error) {
+    console.error("[Database] Failed to get user shows:", error);
+    return [];
+  }
+}
+
+export async function updateShow(id: string, data: Partial<Show>): Promise<Show | null> {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.update(shows).set(data).where(eq(shows.id, id));
+    return db.select().from(shows).where(eq(shows.id, id)).limit(1).then(r => r[0] || null);
+  } catch (error) {
+    console.error("[Database] Failed to update show:", error);
+    throw error;
+  }
+}
+
+export async function deleteShow(id: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  try {
+    await db.delete(shows).where(eq(shows.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete show:", error);
+    throw error;
+  }
+}
+
+// Trilhas queries
+export async function createTrilha(trilha: InsertTrilha): Promise<Trilha | null> {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.insert(trilhas).values(trilha);
+    return db.select().from(trilhas).where(eq(trilhas.id, trilha.id)).limit(1).then(r => r[0] || null);
+  } catch (error) {
+    console.error("[Database] Failed to create trilha:", error);
+    throw error;
+  }
+}
+
+export async function getUserTrilhas(userId: number): Promise<Trilha[]> {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    return await db.select().from(trilhas).where(eq(trilhas.userId, userId));
+  } catch (error) {
+    console.error("[Database] Failed to get user trilhas:", error);
+    return [];
+  }
+}
+
+export async function updateTrilha(id: string, data: Partial<Trilha>): Promise<Trilha | null> {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.update(trilhas).set(data).where(eq(trilhas.id, id));
+    return db.select().from(trilhas).where(eq(trilhas.id, id)).limit(1).then(r => r[0] || null);
+  } catch (error) {
+    console.error("[Database] Failed to update trilha:", error);
+    throw error;
+  }
+}
+
+export async function deleteTrilha(id: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  try {
+    await db.delete(trilhas).where(eq(trilhas.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete trilha:", error);
+    throw error;
+  }
+}
+
+// Uploads queries
+export async function createUpload(upload: InsertUpload): Promise<Upload | null> {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.insert(uploads).values(upload);
+    return db.select().from(uploads).where(eq(uploads.id, upload.id)).limit(1).then(r => r[0] || null);
+  } catch (error) {
+    console.error("[Database] Failed to create upload:", error);
+    throw error;
+  }
+}
+
+export async function getUserUploads(userId: number): Promise<Upload[]> {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    return await db.select().from(uploads).where(eq(uploads.userId, userId));
+  } catch (error) {
+    console.error("[Database] Failed to get user uploads:", error);
+    return [];
+  }
+}
+
+export async function getUploadsByRelated(relatedId: string): Promise<Upload[]> {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    return await db.select().from(uploads).where(eq(uploads.relatedId, relatedId));
+  } catch (error) {
+    console.error("[Database] Failed to get uploads by related ID:", error);
+    return [];
+  }
+}
