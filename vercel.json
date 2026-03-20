@@ -4,6 +4,7 @@
   "installCommand": "pnpm install",
   "outputDirectory": "dist",
   "framework": null,
+  "cleanUrls": true,
   "env": {
     "NODE_ENV": "production"
   },
