@@ -1,43 +1,18 @@
 import "dotenv/config";
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { fileURLToPath } from "url";
-import path from "path";
-import fs from "fs";
-import { appRouter } from "./dist/index.js";
-import { createContext } from "./server/_core/context.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { registerOAuthRoutes } from "../server/_core/oauth";
+import { appRouter } from "../server/routers";
+import { createContext } from "../server/_core/context";
+import { serveStatic } from "../server/_core/vite";
 
 const app = express();
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-// Middleware
-app.use(express.json());
+registerOAuthRoutes(app);
+app.use("/api/trpc", createExpressMiddleware({ router: appRouter, createContext }));
 
-// Serve static files from dist/public
-const publicDir = path.join(__dirname, "dist/public");
-if (fs.existsSync(publicDir)) {
-  app.use(express.static(publicDir));
-}
-
-// tRPC API routes
-app.use(
-  "/api/trpc",
-  createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  })
-);
-
-// Fallback: serve index.html for all other routes (SPA routing)
-app.get("*", (req, res) => {
-  const indexPath = path.join(publicDir, "index.html");
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send("Not found");
-  }
-});
+serveStatic(app);
 
 export default app;
