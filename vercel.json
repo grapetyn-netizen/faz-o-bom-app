@@ -8,7 +8,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server.mjs"
+      "destination": "/api/index.js"
     },
     {
       "source": "/(.*)",
