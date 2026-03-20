@@ -10,6 +10,15 @@ import "./index.css";
 
 const queryClient = new QueryClient();
 
+const getLoginUrlSafe = () => {
+  try {
+    return getLoginUrl();
+  } catch (error) {
+    console.error("Failed to get login URL:", error);
+    return "https://oauth.manus.im/app-auth?type=signIn";
+  }
+};
+
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
@@ -18,7 +27,7 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
 
   if (!isUnauthorized) return;
 
-  window.location.href = getLoginUrl();
+  window.location.href = getLoginUrlSafe();
 };
 
 queryClient.getQueryCache().subscribe(event => {
