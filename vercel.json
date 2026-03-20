@@ -4,5 +4,15 @@
   "framework": null,
   "env": {
     "NODE_ENV": "production"
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/server.mjs"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/dist/public/$1"
+    }
+  ]
 }
