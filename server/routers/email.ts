@@ -2,7 +2,8 @@ import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with fallback - will be null if API key is not configured
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export const emailRouter = router({
   sendReport: protectedProcedure
@@ -20,6 +21,10 @@ export const emailRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        if (!resend) {
+          throw new Error("Email service not configured. Please set RESEND_API_KEY environment variable.");
+        }
+
         const subject =
           input.tipo === "shows"
             ? `Relatório de Shows - ${input.nomeMusico}`

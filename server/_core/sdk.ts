@@ -301,4 +301,19 @@ class SDKServer {
   }
 }
 
-export const sdk = new SDKServer();
+let _sdk: SDKServer | null = null;
+
+export function getSdk(): SDKServer {
+  if (!_sdk) {
+    _sdk = new SDKServer();
+  }
+  return _sdk;
+}
+
+// For backward compatibility
+export const sdk = new Proxy({} as SDKServer, {
+  get: (target, prop) => {
+    const instance = getSdk();
+    return (instance as any)[prop];
+  },
+});
