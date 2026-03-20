@@ -2,15 +2,8 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "framework": null,
-  "functions": {
-    "server.mjs": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/server.mjs"
-    }
-  ]
+  "runtime": "nodejs20.x",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
