@@ -1,4 +1,5 @@
 import "dotenv/config";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import path from "path";
@@ -11,6 +12,7 @@ import { createContext } from "../server/_core/context";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Create Express app
 const app = express();
 
 // Configure body parser with larger size limit for file uploads
@@ -45,4 +47,10 @@ app.get("*", (req, res) => {
   }
 });
 
-export default app;
+// Export as Vercel serverless function
+export default (req: VercelRequest, res: VercelResponse) => {
+  return new Promise((resolve) => {
+    app(req, res as any);
+    res.on("finish", resolve);
+  });
+};
