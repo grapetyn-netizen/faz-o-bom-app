@@ -1,18 +1,33 @@
 {
+  "version": 2,
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "framework": null,
   "env": {
     "NODE_ENV": "production"
   },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.js"
+      "src": "server.mjs",
+      "use": "@vercel/node"
     },
     {
-      "source": "/(.*)",
-      "destination": "/dist/public/$1"
+      "src": "dist/public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.mjs"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/dist/public/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "server.mjs"
     }
   ]
 }
