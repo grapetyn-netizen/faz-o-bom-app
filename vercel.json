@@ -4,12 +4,20 @@
   "installCommand": "pnpm install",
   "outputDirectory": "dist",
   "framework": null,
-  "cleanUrls": false,
-  "trailingSlash": false,
-  "public": false,
   "env": {
     "NODE_ENV": "production"
   },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/(.*)", "destination": "/api/index.js" }
