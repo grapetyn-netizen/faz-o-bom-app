@@ -45,7 +45,14 @@ export default function Home() {
             </p>
           </div>
           <Button
-            onClick={() => window.location.href = getLoginUrl()}
+            onClick={() => {
+              try {
+                window.location.href = getLoginUrl();
+              } catch (error) {
+                console.error("Erro ao gerar URL de login:", error);
+                window.location.href = "https://oauth.manus.im/app-auth?type=signIn";
+              }
+            }}
             className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700 text-white rounded-xl"
           >
             Entrar ou Cadastrar
